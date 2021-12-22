@@ -1,5 +1,5 @@
 # anime_recommender
-This website takes as input the anime you have watched and your ratings for each of them and procedes to use a machine learning algorithm to recomment your next watch.
+This website takes as input the anime you have watched and your ratings for each of them and procedes to use collaborative item based recommender system with computer vision to recommend your next anime.
 
 # Goals
 - Create login page and inital page setup.
