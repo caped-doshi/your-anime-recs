@@ -4,7 +4,7 @@ from sqlalchemy.sql import func
 
 class Anime_Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), unique=True)
+    name = db.Column(db.String(150))
     rating = db.Column(db.Float)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     

@@ -1,0 +1,16 @@
+{%extends "base.html"%}
+{%block title%}Top 3 Anime Recommendations{%endblock%}
+
+{%block content%}
+<br />
+<h4 class="panel-header">Algorithm uses Collaborative Item based filtering with computer vision algorithms.</h3>
+<br />
+<h4 class="page-header">Here are the three animes our search engine recommends to you.</h3>
+<br />
+<form method="GET">
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Show</button>
+</form>
+<ul id="anime_list" class="list-group"></ul>
+<script type="text/javascript" src="{{ url_for('static', filename='recommendation.js') }}"></script>
+
+{%endblock%}
