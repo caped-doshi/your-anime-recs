@@ -30,6 +30,9 @@ const load_anime = (search) => {
 };
 
 const display_anime = (anime, search) => {
+    if (search === ""){
+        anime_list.innerHTML ='';
+    };
     if(search !== ""){
         const html_string = anime.map((a) => {
             const a_string = a;

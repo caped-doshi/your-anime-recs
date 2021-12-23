@@ -7,10 +7,18 @@
 <br />
 <h4 class="page-header">Here are the three animes our search engine recommends to you.</h3>
 <br />
-<form method="GET">
+<form method="POST">
     <button type="submit" class="btn btn-primary btn-lg btn-block">Show</button>
 </form>
-<ul id="anime_list" class="list-group"></ul>
+<br />
+<ul id="anime_list" class="list-group">
+{%for item in a_list%}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="fw-bold">{{item[0]}}</div>
+        <span class="badge badge-secondary rounded-pill">{{item[1]}}</span>
+    </li>
+{%endfor%}
+</ul>
 <script type="text/javascript" src="{{ url_for('static', filename='recommendation.js') }}"></script>
 
 {%endblock%}
