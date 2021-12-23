@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width-device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stars.css') }}">
         <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -51,7 +52,7 @@
                     <div class="alert alert-success alter-dismissable fade show" role="alert">
                         {{message}}
                         <button type='button' class="close" data-dismiss="alert">
-                            <span aria-hidden="true">$times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                 {%endif%}

@@ -15,7 +15,7 @@ def search_page():
     if request.method == 'POST':
         print(request.form)
         anime = request.form.get('name')
-        rating = request.form.get('rating')
+        rating = request.form.get('rating_'+anime)
         s = request.form.get('search_bar')
         r = float(rating)
 
