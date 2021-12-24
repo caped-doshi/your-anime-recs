@@ -11,6 +11,7 @@ def fill_df(df, user_id):
 
     user_index = df.columns.tolist().index(user_id)
     number_neighbors = 3
+    n_neighbors = 3
 
     for m, t, in list(enumerate(df.index)):
         if df.iloc[m, user_index] == 0:

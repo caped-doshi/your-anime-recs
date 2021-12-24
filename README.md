@@ -10,5 +10,9 @@ This website takes as input the anime you have watched and your ratings for each
 - [x] Store ratings in database.
 - [x] Output recommendations using algorithm.
 - [x] Use stars for ranking functionality.
-- [ ] Some sort of GET request functionality that updates stars based on what user has already rated the anime.
-- [ ] Create sql database that stores more details about each anime.
+- [x] Retrieve all anime from database with async functionality.
+- [x] Disable the search bar while data is being retrieved from the database.
+- [x] Some sort of fetch request functionality that updates stars based on what user has already rated the anime.
+- [x] Create database that stores more details about each anime.
+- [ ] Use anime database to put picture and more details about each name in the search results.
+- [ ] Show similar movies so the user knows why its recommended.

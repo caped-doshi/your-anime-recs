@@ -3,6 +3,7 @@ console.log('loaded anime list');
 const anime_list = document.getElementById("anime_list");
 const search_bar = document.getElementById("searchBar");
 let anime = [];
+let ratings = [];
 
 search_bar.addEventListener('keyup', (e) => {
     console.log('keyup');
@@ -24,9 +25,27 @@ const filter = (arr, search) => {
     display_anime(filtered, search);
 }
 
-const load_anime = (search) => {
+async function fetch_anime (){
+    search_bar.disabled = true;
+    console.log("fetching anime");
+    let response = await fetch('/get_anime_list',{method:"POST"});
+    let data = await response.json();
+    return data;
+}
+
+async function fetch_rating (anime_name){
+    console.log("fetching rating");
+    let response = await fetch('/get_rating',{method:"POST"});
+    let data = await response.json();
+    return data;
+}
+
+async function load_anime (search) {
     //make this async function that loads from mongodb cloud 
-    anime = ["Naruto", "One Piece", "Attack on Titan", "My Hero Academia", "Hunter X Hunter"];
+    anime = await fetch_anime();
+    ratings = await fetch_rating();
+    console.log(ratings);
+    search_bar.disabled=false;
 };
 
 const display_anime = (anime, search) => {
@@ -56,24 +75,41 @@ const display_anime = (anime, search) => {
                         <input type="radio" id=${"star1_"+c} name=${r} value="1" />
                         <label for=${"star1_"+c} title="text">1 star</label>
                     </div>
-                    <button type="button" class="btn btn-primary" onClick="getRating(${c}, '${a}')">Rate</button>
+                    <button type="button" id=${"btn_"+c} class="btn btn-primary">Rate</button>
                     <input type="hidden" id="name" name="name" value="${a}"></input>
                     <input type="hidden" id="${"rating_"+a}" name="${"rating_"+a}" value="0"></input>
                 </li>
             </form>
             `;
         }).join('');
+        //onClick=\"getRating(${c}, \"${a}\")\"
         anime_list.innerHTML = html_string;
+        for(let a = 0; a < anime.length; a++){
+            let temp_button = "btn_"+(a+1);
+            document.getElementById(temp_button).addEventListener('click', function(){
+                console.log(temp_button);
+                getRating(a+1, anime[a]);
+            });
+            if(anime[a] in ratings){
+                let temp_rating = ratings[anime[a]];
+                console.log(anime[a]);
+                console.log(temp_rating);
+                let temp_id = "star" + temp_rating+"_"+(a+1);
+                console.log(temp_id);
+                document.getElementById(temp_id).checked = true;
+            }
+        };
     };
 };
 
 function getRating(r, a) {
+    console.log('getting rating');
     var ele = document.getElementsByTagName("input");
     var max = 0;
     var name = "rating_" + r;
     var rating_count = 0;
     for (var i = 0; i < ele.length; i++){
-        if(ele[i].type === "radio" && ele[i].name == name){
+        if(ele[i].type === "radio" && ele[i].name === name){
             rating_count+=1;
             console.log(ele[i].id);
             if(ele[i].checked){
@@ -86,9 +122,11 @@ function getRating(r, a) {
     console.log(temp);
     document.getElementById(temp).value = max;
     document.getElementById('jsform_'+r).submit();
+    load_anime();
 };
 
 load_anime();
+
 filter(anime, search_bar.value);
 
 
