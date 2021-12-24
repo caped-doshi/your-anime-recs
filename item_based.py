@@ -10,9 +10,10 @@ def fill_df(df, user_id):
     distances, indices = knn.kneighbors(df.values, n_neighbors=3)
 
     user_index = df.columns.tolist().index(user_id)
-    number_neighbors = 3
-    n_neighbors = 3
+    number_neighbors = 10
+    n_neighbors = 10
 
+    sim_movies_dict = {}
     for m, t, in list(enumerate(df.index)):
         if df.iloc[m, user_index] == 0:
             sim_movies = indices[m].tolist()
@@ -41,6 +42,10 @@ def fill_df(df, user_id):
                         movie_similarity_copy.pop(s-(len(movie_similarity)-len(movie_similarity_copy)))
                     
                 else:
+                    if t in sim_movies_dict:
+                        sim_movies_dict[t].append(list(df.index.values)[sim_movies[s]])
+                    else:
+                        sim_movies_dict[t] = [list(df.index.values)[sim_movies[s]]]
                     nominator = nominator + movie_similarity[s]*df.iloc[sim_movies[s],user_index]
 
             if len(movie_similarity_copy) > 0:
@@ -53,7 +58,7 @@ def fill_df(df, user_id):
                 predicted_r = 0
             
             df1.iloc[m, user_index] = predicted_r
-    return df1
+    return df1, sim_movies_dict
     
 def recommend_movies(user, df, df1, num_recommended_movies):
 
@@ -71,7 +76,7 @@ def recommend_movies(user, df, df1, num_recommended_movies):
         index_df = df.index.tolist().index(m)
         predicted_rating = df1.iloc[index_df, df1.columns.tolist().index(user)]
         if predicted_rating > 3:
-            recommended_movies.append((m, str(predicted_rating)))
+            recommended_movies.append((m, str(predicted_rating), []))
 
     sorted_rm = sorted(recommended_movies, key=lambda x:x[1], reverse=True)
 

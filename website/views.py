@@ -53,7 +53,7 @@ def search_page():
 @views.route('/recommendation', methods=['GET', 'POST'])
 @login_required
 def recommend():
-    arr = []
+    new_arr = []
     if request.method == 'POST':
         anime = collection.find_one({"_id":"all_anime"})['arr']
         data = {}
@@ -68,13 +68,14 @@ def recommend():
             data[user][anime_index] = r
         df = pd.DataFrame(index=anime, columns=data, data=data)
         df.to_csv('out.csv', encoding='utf-8')
-        print(df)
-        df1 = fill_df(df, current_user.id)
-        print(df1)
-        arr = recommend_movies(current_user.id, df,df1,2)
-        print(arr)
+        df1, sim_movies_dict = fill_df(df, current_user.id)
+        arr = recommend_movies(current_user.id, df,df1,5)
+        new_arr = []
+        for a in arr:
+            tup = (a[0], a[1], sim_movies_dict[a[0]])
+            new_arr.append(tup)
             
-    return render_template("recommendations.html", user=current_user, a_list = arr)
+    return render_template("recommendations.html", user=current_user, a_list = new_arr)
 
 @views.route('/')
 @login_required
