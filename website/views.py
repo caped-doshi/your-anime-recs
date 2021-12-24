@@ -67,6 +67,7 @@ def recommend():
                 data[user] = temp_arr
             data[user][anime_index] = r
         df = pd.DataFrame(index=anime, columns=data, data=data)
+        df.to_csv('out.csv', encoding='utf-8')
         print(df)
         df1 = fill_df(df, current_user.id)
         print(df1)
@@ -94,3 +95,15 @@ def get_rating():
         rating = rating.__dict__
         anime_rating_dict[rating['name']] = rating['rating']
     return anime_rating_dict
+
+@views.route('/get_anime_details', methods=['POST'])
+def get_anime_details():
+    cursor = collection.find({})
+    d = {}
+    for anime in cursor:
+        if anime['_id'] != 'all_anime':
+            img = anime['image']
+            img = img.replace('67','134')
+            img = img.replace('98','196')
+            d[anime['_id']] = (anime['rating'], anime['description'], img)
+    return d

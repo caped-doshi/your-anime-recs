@@ -4,6 +4,7 @@ const anime_list = document.getElementById("anime_list");
 const search_bar = document.getElementById("searchBar");
 let anime = [];
 let ratings = [];
+let anime_details = [];
 
 search_bar.addEventListener('keyup', (e) => {
     console.log('keyup');
@@ -40,11 +41,19 @@ async function fetch_rating (anime_name){
     return data;
 }
 
+async function fetch_anime_details(){
+    console.log("fetching details");
+    let response = await fetch('/get_anime_details',{method:"POST"});
+    let data = await response.json();
+    return data;
+}
+
 async function load_anime (search) {
     //make this async function that loads from mongodb cloud 
     anime = await fetch_anime();
     ratings = await fetch_rating();
-    console.log(ratings);
+    anime_details = await fetch_anime_details();
+    console.log(anime_details);
     search_bar.disabled=false;
 };
 
@@ -58,11 +67,15 @@ const display_anime = (anime, search) => {
             c = c + 1;
             const a_string = a;
             let r = "rating_" + c;
+            let details = anime_details[a];
             return `
             <form id=${"jsform_"+c} method="POST">
                 <li class='list-group-item list-group-item-action' id="${a}">
                     <h6 value="${search}" >${a}</h6>
+                    <h6>${details[0]}/10 on IMDB</h6>
                     <input type="hidden" name="search_bar" value=${search}></input>
+                    <img src="${details[2]}"></img>
+                    <p>${details[1]}</p>
                     <div class="rate">
                         <input type="radio" id=${"star5_"+c} name=${r} value="5" />
                         <label for=${"star5_"+c} title="text">5 stars</label>
