@@ -14,7 +14,7 @@ def fill_df(df, user_id, genres):
 
     knn = NearestNeighbors(metric='cosine', algorithm='brute')
     knn.fit(df.values)
-    distances, indices = knn.kneighbors(df.values, n_neighbors=3)
+    distances, indices = knn.kneighbors(df.values, n_neighbors=10)
 
     user_index = df.columns.tolist().index(user_id)
     number_neighbors = 10

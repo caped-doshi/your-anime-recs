@@ -11,12 +11,16 @@ from pymongo import MongoClient
 import asyncio
 from dotenv import load_dotenv
 from os import getenv
+import json
+from FuzzySearch import SearchAlgorithm
 load_dotenv()
 
 uri = getenv('uri')
 client = MongoClient(uri)
 mongo_db = client.get_database("ratings")
 collection = mongo_db.get_collection("anime")
+
+a_a = collection.find_one({"_id":"all_anime"})['arr']
 
 views = Blueprint('views', __name__)
 
@@ -127,3 +131,15 @@ def get_anime_details():
             img = img.replace('98','196')
             d[anime['_id']] = (anime['rating'], anime['description'], img, anime['genres'])
     return d
+
+@views.route('/get_fuzzy', methods=['POST'])
+def get_fuzzy():
+    data = request.data
+    data = data.decode("utf-8")
+    search = json.loads(data)
+    search = search["search"]
+    print(search)
+
+    search_algo = SearchAlgorithm(a_a)
+    top_5 = search_algo.top_5(search)
+    return jsonify(top_5)

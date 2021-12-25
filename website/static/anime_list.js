@@ -6,13 +6,13 @@ let anime = [];
 let ratings = [];
 let anime_details = [];
 
-search_bar.addEventListener('keyup', (e) => {
+ search_bar.addEventListener('keyup', async function(e){
     console.log('keyup');
     let search = e.target.value.toLowerCase();
-    const filtered = anime.filter((a) => {
-        return a.toLowerCase().includes(search);
-    });
-    display_anime(filtered, search);
+    res = await fetch_fuzzy(search);
+    const fuzzy = res.split("!@#");
+    console.log(fuzzy);
+    display_anime(fuzzy, search);
 });
 
 const filter = (arr, search) => {
@@ -24,6 +24,15 @@ const filter = (arr, search) => {
     console.log('filter');
     console.log(filtered);
     display_anime(filtered, search);
+}
+
+async function fetch_fuzzy(search){
+    console.log("fetching fuzzy");
+    //console.log(search);
+    let response = await fetch('/get_fuzzy',{method:"POST",body: JSON.stringify({ search: search })});
+    let data = await response.json();
+    console.log(data);
+    return data;
 }
 
 async function fetch_anime (){
