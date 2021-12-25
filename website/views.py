@@ -47,6 +47,7 @@ def search_page():
                 name=anime, rating=r, user_id=current_user.id)
             db.session.add(new_rating)
             db.session.commit()
+            flash(f"You rated {anime}", category="success")
 
     return render_template("search.html", user=current_user, search=s)
 
@@ -82,6 +83,18 @@ def recommend():
             new_arr.append(tup)
             
     return render_template("recommendations.html", user=current_user, a_list = new_arr)
+
+@views.route('/history')
+@login_required
+def history():
+    arr = []
+    anime_rating = Anime_Rating.query.filter_by(user_id=current_user.id)
+    for rating in anime_rating:
+        rating = rating.__dict__
+        date = rating['date']
+        tup = (rating['name'], rating['rating'], (str(date.year), str(date.month), str(date.day), date.hour, date.minute, date.second))
+        arr.append(tup)
+    return render_template("history.html", user=current_user, history_list=arr)
 
 @views.route('/')
 @login_required
