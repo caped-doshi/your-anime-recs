@@ -66,9 +66,15 @@ def recommend():
                 temp_arr = [0 for i in range(len(anime))]
                 data[user] = temp_arr
             data[user][anime_index] = r
+        
         df = pd.DataFrame(index=anime, columns=data, data=data)
-        df.to_csv('out.csv', encoding='utf-8')
-        df1, sim_movies_dict = fill_df(df, current_user.id)
+        cursor = collection.find({})
+        genres = []
+        for anime in cursor:
+            if anime['_id'] != 'all_anime':
+                genres.append(anime['genres'])
+        print(genres)
+        df1, sim_movies_dict = fill_df(df, current_user.id, genres)
         arr = recommend_movies(current_user.id, df,df1,5)
         new_arr = []
         for a in arr:
@@ -106,5 +112,5 @@ def get_anime_details():
             img = anime['image']
             img = img.replace('67','134')
             img = img.replace('98','196')
-            d[anime['_id']] = (anime['rating'], anime['description'], img)
+            d[anime['_id']] = (anime['rating'], anime['description'], img, anime['genres'])
     return d

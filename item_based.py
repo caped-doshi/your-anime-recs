@@ -1,7 +1,14 @@
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 
-def fill_df(df, user_id):
+def find_diff(genre_1, genre_2):
+    diff = 1
+    for genre in genre_1:
+        if genre not in genre_2:
+            diff -= 0.2
+    return diff
+
+def fill_df(df, user_id, genres):
 
     df1 = df.copy()
 
@@ -46,7 +53,10 @@ def fill_df(df, user_id):
                         sim_movies_dict[t].append(list(df.index.values)[sim_movies[s]])
                     else:
                         sim_movies_dict[t] = [list(df.index.values)[sim_movies[s]]]
-                    nominator = nominator + movie_similarity[s]*df.iloc[sim_movies[s],user_index]
+                    genre1 = genres[m]
+                    genre2 = genres[sim_movies[s]]
+                    diff = find_diff(genre1, genre2)
+                    nominator = nominator + diff * movie_similarity[s]*df.iloc[sim_movies[s],user_index]
 
             if len(movie_similarity_copy) > 0:
                 if sum(movie_similarity_copy) > 0:
