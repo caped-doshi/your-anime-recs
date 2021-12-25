@@ -15,6 +15,7 @@ This website takes as input the anime you have watched and your ratings for each
 - [x] Some sort of fetch request functionality that updates stars based on what user has already rated the anime.
 - [x] Create database that stores more details about each anime.
 - [x] Use anime database to put picture and more details about each name in the search results.
-- [ ] Show similar movies so the user knows why its recommended.
+- [x] Show similar movies so the user knows why its recommended.
 - [ ] Create a history navbar item that shows all the ratings of anime user has reviewed.
 - [ ] Use fuzzy search algorithm and limit search results to only 5.
+- [ ] Make improvements to the recommendation by using the genre of the anime to increase/decrease similarity score.
