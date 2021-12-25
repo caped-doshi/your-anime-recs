@@ -26,11 +26,13 @@ while counter < 3:
     ratings = soup.find_all('div', {'class': 'inline-block ratings-imdb-rating'})
     descriptions = soup.find_all('p', {'class':'text-muted'})
     images = soup.find_all('div', {'class': 'lister-item-image float-left'})
+    genres = soup.find_all('span', {'class': 'genre'})
 
     processed_ratings = []
     processed_titles = []
     processed_descriptions = []
     processed_images = []
+    processed_genres = []
 
     i = 0
     while i < len(ratings):
@@ -58,11 +60,20 @@ while counter < 3:
             processed_images.append(img['loadlate'])
         else:
             processed_images.append(img['src'])
+    
+    for genre in genres:
+        txt = genre.text
+        txt = txt.replace('\n', '')
+        txt = txt.strip()
+        arr = txt.split(', ')
+        arr = arr[1:]
+        processed_genres.append(arr)
 
     for i in range(0, len(processed_titles)):
         dictionary[processed_titles[i]] = (processed_ratings[i], 
                                             processed_descriptions[i],
-                                            processed_images[i])
+                                            processed_images[i],
+                                            processed_genres[i])
     
     processed_ratings = []
     processed_titles = []

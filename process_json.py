@@ -29,10 +29,10 @@ def process_dict(dictionary):
         result = find_by_id(title)
         arr = dictionary[title]
         if result.count() == 0:
-            post = {"_id": title, "rating":arr[0], "description":arr[1], "image":arr[2]}
+            post = {"_id": title, "rating":arr[0], "description":arr[1], "image":arr[2], "genres":arr[3]}
             collection.insert_one(post)
         else:
-            new_val = {"$set": {"rating":arr[0], "description":arr[1], "image":arr[2]}}
+            new_val = {"$set": {"rating":arr[0], "description":arr[1], "image":arr[2], "genres":arr[3]}}
             collection.update_one({"_id":title},new_val)
 
 process_dict(d)
