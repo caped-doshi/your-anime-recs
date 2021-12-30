@@ -121,7 +121,6 @@ textblob==0.17.1
 threadpoolctl==3.0.0
 tokenizers==0.10.3
 tomli==1.2.2
-torch==1.10.0
 tqdm==4.62.3
 traitlets==5.1.0
 transformers==4.12.5
