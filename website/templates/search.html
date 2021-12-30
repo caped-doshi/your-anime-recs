@@ -1,19 +1,40 @@
-{%extends "base.html"%}
-{%block title%} Search for Anime you have watched {%endblock%}
-
-{% block content %}
+{%extends "base.html"%} {%block title%} Search for Anime you have watched
+{%endblock%} {% block content %}
 <br />
-<img src="https://cdn.shopify.com/s/files/1/0274/5804/3965/products/s-l1600_1024x1024.jpg?v=1595520843" class="center"/>
+<img
+  src="https://cdn.shopify.com/s/files/1/0274/5804/3965/products/s-l1600_1024x1024.jpg?v=1595520843"
+  class="center"
+/>
 <div class="input-group">
-    <input class="form-control border-end-0 border rounded-pill" type="text" name="searchBar" id="searchBar" value="{{search}}">
-    <span class="input-group-append">
-        <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button">
-            <i class="fa fa-search"></i>
-        </button>
-    </span>
+  <input
+    class="form-control border-end-0 border rounded-pill"
+    type="text"
+    name="searchBar"
+    id="searchBar"
+    value="{{search}}"
+  />
+  <span class="input-group-append">
+    <button
+      class="
+        btn btn-outline-secondary
+        bg-white
+        border-start-0 border
+        rounded-pill
+        ms-n3
+      "
+      type="button"
+    >
+      <i class="fa fa-search"></i>
+    </button>
+  </span>
 </div>
 <br />
 <ul class="list-group grid-container" id="anime_list"></ul>
-<script type="text/javascript" src="{{ url_for('static', filename='anime_list.js') }}"></script>
+<br />
+<br />
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='anime_list.js') }}"
+></script>
 
 {%endblock%}

@@ -2,10 +2,10 @@
 {%block title%}Top 3 Anime Recommendations{%endblock%}
 
 {%block content%}
-<h4 class="display-4">Algorithm uses Collaborative Item based filtering with <mark>
-    computer vision</mark> algorithms.</h3>
 <br />
-<h4 class="display-4">Here are the three animes our search engine recommends to you.</h3>
+<h4>Algorithm uses Collaborative Item based filtering with <b>
+    computer vision</b> algorithms.</h3>
+<h4>Here are the animes our search engine recommends to you.</h3>
 <br />
 <form method="POST">
     <button type="submit" class="btn btn-primary btn-lg btn-block">Show</button>
@@ -24,10 +24,14 @@
             <li class="mb-3">{{sim_anime}}</li>
         {%endfor%}
         </ul>
-        
     </li>
 {%endfor%}
 </ul>
+{%if a_list |length == 0%}
+<p>Please enter more reviews for animes you have watched.</p>
+{%endif%}
+<br />
+<br />
 <script type="text/javascript" src="{{ url_for('static', filename='recommendation.js') }}"></script>
 
 {%endblock%}
