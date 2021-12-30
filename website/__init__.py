@@ -30,6 +30,8 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
 
+    app = Flask(__name__, template_folder='templates') 
+
     return app
 
 def create_database(app):
