@@ -1,5 +1,12 @@
-# anime_recommender
+# Anime Recommendation Website
 This website takes as input the anime you have watched and your ratings for each of them and procedes to use collaborative item based recommender system with computer vision to recommend your next anime.
+1. Create an account. 
+2. Search for animes you have watched and select your rating for them.
+3. See what our algorithm recommends for you as well as what we think you will rate the anime.
+
+# Hosting
+Hosted on Heroku.
+https://your-anime-recs-v2.herokuapp.com/
 
 # Features
 - [x] Login and Sign Up Page.
