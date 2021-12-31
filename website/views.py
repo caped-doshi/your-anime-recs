@@ -15,12 +15,11 @@ import json
 from FuzzySearch import SearchAlgorithm
 load_dotenv()
 
-uri = getenv('uri')
-client = MongoClient("mongodb+srv://arvind27kr:CHytPeNrNg6uyZgA@movie-data.pxrlp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-mongo_db = client.get_database("ratings")
-collection = mongo_db.get_collection("anime")
+# client = MongoClient("mongodb+srv://arvind27kr:CHytPeNrNg6uyZgA@movie-data.pxrlp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+# mongo_db = client.get_database("ratings")
+# collection = mongo_db.get_collection("anime")
 
-a_a = collection.find_one({"_id":"all_anime"})['arr']
+# a_a = collection.find_one({"_id":"all_anime"})['arr']
 
 views = Blueprint('views', __name__)
 
